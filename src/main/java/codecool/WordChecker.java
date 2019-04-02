@@ -1,9 +1,6 @@
 package codecool;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 public class WordChecker {
 
@@ -141,6 +138,29 @@ public class WordChecker {
         }
     }
 
+    public void spellchecking(String word) {
+        String[] splicedInputText = word.split(" ");
+
+        for(String element: splicedInputText) {
+            if(!searchWordInWordlist(element)) {
+                System.out.println("word not found: " + element.toUpperCase() + "\n");
+
+                this.suggesstionsList = new HashSet<>();
+
+                swappingCharacters(element);
+                insertLettersBetweenAdjacentLetters(element);
+                deleteEachCharacter(element);
+                replaceEachCharacterOthers(element);
+                splitWordInsertingSpaceBetweenCharacters(element);
+
+                for(String suggestedWord: this.suggesstionsList) {
+                    System.out.println(suggestedWord);
+                }
+                System.out.println();
+            }
+        }
+    }
+
     private StringBuilder insertSpaceBetweenParCharacters(String word) {
         StringBuilder builder = new StringBuilder();
 
@@ -153,14 +173,5 @@ public class WordChecker {
             builder.append(" ");
         }
         return builder;
-    }
-
-
-    public static void main(String[] args) {
-        WordChecker wordChecker = new WordChecker();
-
-        wordChecker.splitWordInsertingSpaceBetweenCharacters("makeupx0");
-
-        wordChecker.splitWordInsertingSpaceBetweenCharacters("make");
     }
 }
