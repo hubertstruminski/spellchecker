@@ -85,6 +85,39 @@ public class WordChecker {
         }
     }
 
+    public void deleteEachCharacter(String word) {
+        StringBuilder builder = new StringBuilder(word);
+
+        for(int i = builder.toString().length() - 1; i >= 0; i--) {
+            builder.deleteCharAt(i);
+
+            if(searchWordInWordlist(builder.toString())) {
+                suggesstionsList.add(builder.toString());
+            }
+        }
+    }
+
+    public void replaceEachCharacterOthers(String word) {
+        StringBuilder builder = new StringBuilder(word);
+
+        for(int i=0; i<builder.toString().length(); i++) {
+            for(int j=0; j<alphabet.length(); j++) {
+                builder.setCharAt(i, alphabet.charAt(j));
+
+                if(searchWordInWordlist(builder.toString())) {
+                    suggesstionsList.add(builder.toString());
+                }
+
+                if(j == alphabet.length() - 1) {
+                    builder.setCharAt(i, word.charAt(i));
+                }
+            }
+        }
+    }
+
+    
+
+
     public static void main(String[] args) {
         WordChecker wordChecker = new WordChecker();
 //        boolean result = wordChecker.searchWordInWordlist("makexxxxxxxxx");
@@ -97,6 +130,10 @@ public class WordChecker {
         wordChecker.swappingCharacters("make");
 
         wordChecker.insertLettersBetweenAdjacentLetters("MAKE");
+
+        wordChecker.deleteEachCharacter("make");
+
+        wordChecker.replaceEachCharacterOthers("make");
 
     }
 }
