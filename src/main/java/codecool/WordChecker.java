@@ -1,5 +1,6 @@
 package codecool;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -115,25 +116,51 @@ public class WordChecker {
         }
     }
 
-    
+    public void splitWordInsertingSpaceBetweenCharacters(String word) {
+        StringBuilder builder = insertSpaceBetweenParCharacters(word);
+        String[] splicedWord = builder.toString().split(" ");
+        List<String> wordsList = new ArrayList<>();
+        List<String> result = new ArrayList<>();
+
+        for(String element: splicedWord) {
+            if(element.length() > 1) {
+                wordsList.add(element);
+            }
+        }
+
+        for(String element: wordsList) {
+            if(searchWordInWordlist(element)) {
+                result.add(element);
+            }
+        }
+
+        if(result.size() > 1) {
+            for(String element: result) {
+                replaceEachCharacterOthers(element);
+            }
+        }
+    }
+
+    private StringBuilder insertSpaceBetweenParCharacters(String word) {
+        StringBuilder builder = new StringBuilder();
+
+        for (int i = 0; i < word.length(); i += 2) {
+            if(i == word.length() - 1) {
+                builder.append(word.substring(i, i + 1));
+                break;
+            }
+            builder.append(word.substring(i, i + 2));
+            builder.append(" ");
+        }
+        return builder;
+    }
 
 
     public static void main(String[] args) {
         WordChecker wordChecker = new WordChecker();
-//        boolean result = wordChecker.searchWordInWordlist("makexxxxxxxxx");
-//
-//        if(result) {
-//            System.out.println("The word has been found");
-//        } else {
-//            System.out.println("Not found");
-//        }
-        wordChecker.swappingCharacters("make");
 
-        wordChecker.insertLettersBetweenAdjacentLetters("MAKE");
+        wordChecker.splitWordInsertingSpaceBetweenCharacters("makeupx0");
 
-        wordChecker.deleteEachCharacter("make");
-
-        wordChecker.replaceEachCharacterOthers("make");
-
+        wordChecker.splitWordInsertingSpaceBetweenCharacters("make");
     }
 }
